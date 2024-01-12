@@ -28,7 +28,7 @@ def collate_dict(ds):
       return get(default_collate(b))
     return _f
 
-# %% ../nbs/05_datasets.ipynb 41
+# %% ../nbs/05_datasets.ipynb 42
 @fc.delegates(plt.Axes.imshow)
 def show_image(im, ax=None, figsize=None, title=None, noframe=True, **kwargs):
     "Show a PIL or PyTorch image on `ax`."
@@ -45,7 +45,7 @@ def show_image(im, ax=None, figsize=None, title=None, noframe=True, **kwargs):
     if noframe: ax.axis('off')
     return ax
 
-# %% ../nbs/05_datasets.ipynb 45
+# %% ../nbs/05_datasets.ipynb 46
 @fc.delegates(plt.subplots, keep=True)
 def subplots(
     nrows:int=1, # Number of rows in returned axes grid
@@ -62,7 +62,7 @@ def subplots(
     if nrows*ncols==1: ax = np.array([ax])
     return fig,ax
 
-# %% ../nbs/05_datasets.ipynb 49
+# %% ../nbs/05_datasets.ipynb 50
 @fc.delegates(subplots)
 def get_grid(
     n:int, # Number of axes
@@ -84,7 +84,7 @@ def get_grid(
     if title is not None: fig.suptitle(title, weight=weight, size=size)
     return fig,axs
 
-# %% ../nbs/05_datasets.ipynb 51
+# %% ../nbs/05_datasets.ipynb 52
 @fc.delegates(subplots)
 def show_images(ims:list, # Images to show
                 nrows:int|None=None, # Number of rows in grid
@@ -95,7 +95,7 @@ def show_images(ims:list, # Images to show
     axs = get_grid(len(ims), nrows, ncols, **kwargs)[1].flat
     for im,t,ax in zip_longest(ims, titles or [], axs): show_image(im, ax=ax, title=t)
 
-# %% ../nbs/05_datasets.ipynb 55
+# %% ../nbs/05_datasets.ipynb 56
 class DataLoaders:
     def __init__(self, *dls): self.train,self.valid = dls[:2]
 
