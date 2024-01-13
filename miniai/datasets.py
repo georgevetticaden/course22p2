@@ -28,10 +28,11 @@ def collate_dict(ds):
       return get(default_collate(b))
     return _f
 
-# %% ../nbs/05_datasets.ipynb 42
+# %% ../nbs/05_datasets.ipynb 41
 @fc.delegates(plt.Axes.imshow)
 def show_image(im, ax=None, figsize=None, title=None, noframe=True, **kwargs):
     "Show a PIL or PyTorch image on `ax`."
+    #import pdb; pdb.set_trace()
     if fc.hasattrs(im, ('cpu','permute','detach')):
         im = im.detach().cpu()
         if len(im.shape)==3 and im.shape[0]<5: im=im.permute(1,2,0)
@@ -45,7 +46,7 @@ def show_image(im, ax=None, figsize=None, title=None, noframe=True, **kwargs):
     if noframe: ax.axis('off')
     return ax
 
-# %% ../nbs/05_datasets.ipynb 46
+# %% ../nbs/05_datasets.ipynb 45
 @fc.delegates(plt.subplots, keep=True)
 def subplots(
     nrows:int=1, # Number of rows in returned axes grid
@@ -62,7 +63,7 @@ def subplots(
     if nrows*ncols==1: ax = np.array([ax])
     return fig,ax
 
-# %% ../nbs/05_datasets.ipynb 50
+# %% ../nbs/05_datasets.ipynb 49
 @fc.delegates(subplots)
 def get_grid(
     n:int, # Number of axes
@@ -74,7 +75,8 @@ def get_grid(
     **kwargs,
 ): # fig and axs
     "Return a grid of `n` axes, `rows` by `cols`"
-    if nrows: ncols = ncols or int(np.floor(n/nrows))
+    #import pdb; pdb.set_trace()
+    if nrows: ncols = ncols or int(np.ceil(n/nrows))
     elif ncols: nrows = nrows or int(np.ceil(n/ncols))
     else:
         nrows = int(math.sqrt(n))
@@ -84,7 +86,7 @@ def get_grid(
     if title is not None: fig.suptitle(title, weight=weight, size=size)
     return fig,axs
 
-# %% ../nbs/05_datasets.ipynb 52
+# %% ../nbs/05_datasets.ipynb 51
 @fc.delegates(subplots)
 def show_images(ims:list, # Images to show
                 nrows:int|None=None, # Number of rows in grid
@@ -95,7 +97,7 @@ def show_images(ims:list, # Images to show
     axs = get_grid(len(ims), nrows, ncols, **kwargs)[1].flat
     for im,t,ax in zip_longest(ims, titles or [], axs): show_image(im, ax=ax, title=t)
 
-# %% ../nbs/05_datasets.ipynb 56
+# %% ../nbs/05_datasets.ipynb 55
 class DataLoaders:
     def __init__(self, *dls): self.train,self.valid = dls[:2]
 
