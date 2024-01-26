@@ -22,7 +22,8 @@ def set_seed(seed, deterministic=False):
 # %% ../nbs/10_activations.ipynb 36
 class Hook():
     def __init__(self, m, f): self.hook = m.register_forward_hook(partial(f, self))
-    def remove(self): self.hook.remove()
+    def remove(self):
+      self.hook.remove()
     def __del__(self): self.remove()
 
 # %% ../nbs/10_activations.ipynb 49
