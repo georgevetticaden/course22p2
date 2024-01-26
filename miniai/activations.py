@@ -63,16 +63,16 @@ def append_stats(hook, mod, inp, outp):
     hook.stats[1].append(acts.std())
     hook.stats[2].append(acts.abs().histc(40,0,10))
 
-# %% ../nbs/10_activations.ipynb 60
+# %% ../nbs/10_activations.ipynb 62
 # Thanks to @ste for initial version of histgram plotting code
 def get_hist(h): return torch.stack(h.stats[2]).t().float().log1p()
 
-# %% ../nbs/10_activations.ipynb 62
+# %% ../nbs/10_activations.ipynb 65
 def get_min(h):
     h1 = torch.stack(h.stats[2]).t().float()
     return h1[0]/h1.sum(0)
 
-# %% ../nbs/10_activations.ipynb 65
+# %% ../nbs/10_activations.ipynb 68
 class ActivationStats(HooksCallback):
     def __init__(self, mod_filter=fc.noop): super().__init__(append_stats, mod_filter)
 
